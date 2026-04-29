@@ -94,6 +94,13 @@ $(document).ready(function() {
 
 });
 
+setTimeout(() => {
+  const elements = document.querySelectorAll('.header, .nav');
+  elements.forEach(el => {
+    el.classList.add('no-animation');
+  });
+}, 3000);
+
 (function() {
   const track = document.getElementById('track');
   const slides = Array.from(document.querySelectorAll('.simple-slide'));
@@ -101,87 +108,78 @@ $(document).ready(function() {
   const nextBtn = document.getElementById('nextSlide');
 
   let activeIndex = 0;
-  let isTransitioning = false; // блокируем повторные клики во время анимации
+  let isMoving = false;
 
-  // Получить фактическую ширину слайда (учитывает класс active)
-  function getRealWidth(slide) {
+  // Получить текущую ширину слайда (с учётом класса active)
+  function getWidth(slide) {
     return slide.classList.contains('active') ? 570 : 120;
   }
 
-  // Пересчитать смещение трека на основе актуальных ширин
-  function updateTrackPosition() {
+  // Рассчитать смещение трека для указанного индекса (на основе текущих ширин)
+  function getOffset(index) {
     let offset = 0;
-    // Суммируем ширину всех слайдов до активного (с учётом gap между ними)
-    for (let i = 0; i < activeIndex; i++) {
-      const width = getRealWidth(slides[i]);
-      offset += width;
-      if (i < activeIndex - 1) offset += 20; // только gap между слайдами до активного
+    for (let i = 0; i < index; i++) {
+      offset += getWidth(slides[i]) + 10; // +10 это gap
     }
-    // Применяем сдвиг
+    return offset;
+  }
+
+  // Плавно переместить трек к активному слайду
+  function updatePosition() {
+    if (isMoving) return;
+    const offset = getOffset(activeIndex);
     track.style.transform = `translateX(-${offset}px)`;
   }
 
-  // Обновить классы active у слайдов
-  function updateActiveClass() {
-    slides.forEach((slide, i) => {
-      if (i === activeIndex) {
-        slide.classList.add('active');
-      } else {
-        slide.classList.remove('active');
-      }
-    });
-  }
-
-  // Главная функция смены слайда
-  function goToSlide(newIndex, direction) {
-    if (isTransitioning) return;
-    if (newIndex < 0 || newIndex >= slides.length) return;
+  // Сменить активный слайд (мгновенно меняем классы, затем плавно двигаем трек)
+  function setActive(newIndex) {
+    if (isMoving) return;
     if (newIndex === activeIndex) return;
+    if (newIndex < 0 || newIndex >= slides.length) return;
 
-    isTransitioning = true;
+    isMoving = true;
 
-    // 1. Удаляем класс active у старого слайда
+    // Меняем классы мгновенно (без анимации)
     slides[activeIndex].classList.remove('active');
-    // 2. Добавляем класс active новому слайду (ширина начнёт меняться)
     slides[newIndex].classList.add('active');
+    activeIndex = newIndex;
 
-    // Небольшая задержка — дожидаемся, чтобы браузер начал transition ширины
-    // Без этого offset рассчитается по старой ширине
+    // Пересчитываем и применяем новую позицию (с анимацией трека)
+    const newOffset = getOffset(activeIndex);
+    track.style.transform = `translateX(-${newOffset}px)`;
+
+    // Разблокируем после окончания анимации трека
+    const onTransitionEnd = () => {
+      track.removeEventListener('transitionend', onTransitionEnd);
+      isMoving = false;
+    };
+    track.addEventListener('transitionend', onTransitionEnd);
     setTimeout(() => {
-      // 3. Обновляем индекс
-      activeIndex = newIndex;
-
-      // 4. Рассчитываем и применяем новую позицию трека
-      updateTrackPosition();
-
-      // 5. Ждём окончания анимации transform
-      const onTransitionEnd = () => {
-        track.removeEventListener('transitionend', onTransitionEnd);
-        isTransitioning = false;
-      };
-      track.addEventListener('transitionend', onTransitionEnd);
-
-      // Защита от зависания (если transition не сработал)
-      setTimeout(() => {
-        track.removeEventListener('transitionend', onTransitionEnd);
-        isTransitioning = false;
-      }, 400);
-    }, 20); // 20ms достаточно, чтобы CSS transition запустился
+      track.removeEventListener('transitionend', onTransitionEnd);
+      isMoving = false;
+    }, 400);
   }
 
-  // Обработчики кнопок
-  prevBtn.addEventListener('click', () => goToSlide(activeIndex - 1, 'prev'));
-  nextBtn.addEventListener('click', () => goToSlide(activeIndex + 1, 'next'));
+  // Навешиваем обработчики
+  prevBtn.addEventListener('click', () => setActive(activeIndex - 1));
+  nextBtn.addEventListener('click', () => setActive(activeIndex + 1));
+  slides.forEach((slide, idx) => {
+    slide.addEventListener('click', () => setActive(idx));
+  });
 
-  // Инициализация
-  function init() {
-    updateActiveClass();
-    updateTrackPosition();
-  }
-  init();
+  // Стартовая инициализация
+  slides[activeIndex].classList.add('active');
+  updatePosition();
 
-  // Если окно меняет размер — пересчитываем позицию (ширины остаются те же, но может съехать)
+  // При ресайзе пересчитываем позицию без анимации
   window.addEventListener('resize', () => {
-    if (!isTransitioning) updateTrackPosition();
+    if (!isMoving) {
+      const offset = getOffset(activeIndex);
+      track.style.transition = 'none';
+      track.style.transform = `translateX(-${offset}px)`;
+      track.offsetHeight;
+      track.style.transition = '';
+    }
   });
 })();
+

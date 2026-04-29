@@ -464,9 +464,25 @@ button:focus{
     max-width: 1300px;
     margin: 0 auto;
     padding: 15px 25px;
+    position: relative;
+    z-index: 1;
+}
+
+.header .in:before{
+    content: "";
+    width: 100%;
+    height: 100%;
     backdrop-filter: blur(50px);
     background: rgba(255, 255, 255, 0.1);
     border-radius: 100px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.header_inner .in:before{
+    display: none;
 }
 
 .header_inner .in{
@@ -475,6 +491,8 @@ button:focus{
     background: none;
     border-radius: 0;
 }
+
+
 
 .header .cols{
     flex-wrap: nowrap;
@@ -538,13 +556,28 @@ button:focus{
 }
 
 .nav ul ul{
-    width: 300px;
+    width: 360px;
     display: none;
-    padding-top: 20px;
-    padding-bottom: 36px;
+    padding-top: 60px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 24px;
     list-style: none;
     position: absolute;
     top: 100%;
+    left: -15px;
+}
+
+.nav ul ul:before{
+    content: "";
+    width: 100%;
+    height: calc(100% - 40px);
+    backdrop-filter: blur(50px);
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 30px;
+    position: absolute;
+    bottom: 0;
     left: 0;
 }
 
@@ -561,6 +594,7 @@ button:focus{
     min-height: 48px;
     display: flex;
     align-items: center;
+    padding: 0 15px;
     font-weight: 400;
     font-size: 14px;
     line-height: 1.3;
@@ -2108,33 +2142,30 @@ ol li{
 /************/
 .simple-slider {
   position: relative;
-  max-width: 100%;
   overflow: hidden;
   user-select: none;
 }
-
 .simple-slider__container {
   overflow: hidden;
 }
-
 .simple-slider__track {
   display: flex;
-  transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-  will-change: transform;
-  gap: 20px; /* отступ между слайдами — не влияет на расчёт, но для красоты */
+  transition: transform 0.3s ease-out;
+  gap: 10px;
 }
-
 .simple-slide {
   flex-shrink: 0;
   width: 120px;
-  transition: width 0.3s ease;
-  /* Фиксируем левый край при масштабировании */
-  transform-origin: left center;
-}
 
+
+  cursor: pointer;
+  transition: width 0.3s ease-out;
+}
 .simple-slide.active {
   width: 570px;
 }
+
+
 
 .simple-slider__prev,
 .simple-slider__next {
@@ -2506,7 +2537,7 @@ ol li{
 
 .footer__place{
     margin-bottom: 20px;
-    padding-left: 33px;
+    /*padding-left: 33px;*/
     position: relative;
     font-weight: 400;
     font-size: 16px;
@@ -2515,19 +2546,19 @@ ol li{
 }
 
 .footer__place:before{
-    content: "";
+    /*content: "";
     width: 13px;
     height: 14px;
     background: url(../img/footer/place.svg) center no-repeat;
     position: absolute;
     top: 50%;
     left: 0;
-    transform: translateY(-50%);
+    transform: translateY(-50%);*/
 }
 
 .footer__mail{
     margin-bottom: 20px;
-    padding-left: 33px;
+    /*padding-left: 33px;*/
     position: relative;
     font-weight: 400;
     font-size: 16px;
@@ -2540,14 +2571,14 @@ ol li{
 }
 
 .footer__mail:before{
-    content: "";
+    /*content: "";
     width: 13px;
     height: 9px;
     background: url(../img/footer/mail.svg) center no-repeat;
     position: absolute;
     top: 50%;
     left: 0;
-    transform: translateY(-50%);
+    transform: translateY(-50%);*/
 }
 
 .footer__phone{
@@ -2579,6 +2610,9 @@ ol li{
     display: none!important;
 }
 
+.no-animation {
+  animation: none !important;
+}
 
 
 
