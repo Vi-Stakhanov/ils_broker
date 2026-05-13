@@ -524,7 +524,7 @@ button:focus{
 .nav > ul > li > a{
     display: flex;
     align-items: center;
-    font-weight: 400;
+    font-weight: 600;
     font-size: 14px;
     line-height: 1.3;
     text-transform: uppercase;
@@ -595,7 +595,7 @@ button:focus{
     display: flex;
     align-items: center;
     padding: 0 15px;
-    font-weight: 400;
+    font-weight: 600;
     font-size: 14px;
     line-height: 1.3;
     text-transform: uppercase;
@@ -713,7 +713,7 @@ button:focus{
     align-items: center;
     justify-content: space-between;
     padding: 3px 20px 3px;
-    font-weight: 400;
+    font-weight: 600;
     font-size: 12px;
     line-height: 1.3;
     text-transform: uppercase;
@@ -797,6 +797,7 @@ button:focus{
 .intro .pic{
     width: 100%;
     height: 100%;
+    display: none;
     position: absolute;
     top: 0;
     left: 0;
@@ -820,6 +821,29 @@ button:focus{
     display: block;
     object-fit: cover;
     object-position: right center;
+}
+
+.intro video{
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    object-fit: cover;
+    object-position: center;
+}
+
+.intro .overlay{
+    content: "";
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(80.15deg, #2E2E2E 0%, rgba(46, 46, 46, 0) 100%);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 3;
 }
 
 .intro .container{
@@ -2251,6 +2275,10 @@ ol li{
 }
 
 /**VAL**/
+.val-wrap{
+    display: none;
+}
+
 .val{
 
 }
@@ -2614,5 +2642,90 @@ ol li{
   animation: none !important;
 }
 
+/**POPUP*/
+.popup{
+    width: calc(100vw - 10px);
+    max-width: 600px;
+    padding: 40px;
+    background: #2e2e2e;
+    font-family: 'Inter', sans-serif;
+}
 
+.popup__title{
+    margin-bottom: 20px;
+    font-family: 'bebas_neuebold';
+    font-weight: 700;
+    font-size: 52px;
+    line-height: 1.1;
+    text-transform: uppercase;
+    color: #fff;
+}
+
+.popup__text{
+    margin-bottom: 20px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.3;
+    color: #fff;
+}
+
+.popup__text.lg{
+    font-size: 20px;
+}
+
+.fancybox-content{
+    overflow: visible;
+}
+
+.fancybox-slide > *{
+    padding: 0;
+    background: transparent;
+}
+
+.fancybox-slide--html .fancybox-close-small{
+    padding: 3px;
+    top: 2px;
+    right: 2px;
+    opacity: 1;
+    color: #fff;
+}
+
+.fancybox-close-small:after{
+    content: "";
+    display: block;
+    width: 100%;
+    height: 100%;
+    font-size: 0;
+    color: transparent;
+    background: transparent url(../img/header/burger_close.svg) center no-repeat;
+    top: 0px;
+    right: 0px;
+    border-radius: 0;
+}
+
+.fancybox-close-small svg{
+    display: none;
+}
+
+.fancybox-bg{
+    /*backdrop-filter: blur(40px);*/
+    background: rgba(43, 43, 43, 0.6);
+}
+
+.up-page{
+    width: 56px;
+    height: 56px;
+    display: block;
+    background: url(../img/icons/up-2.svg) center no-repeat;
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    transition: .3s;
+    opacity: 0;
+    z-index: 12;
+}
+
+.up-page.active{
+    opacity: 1;
+}
 
