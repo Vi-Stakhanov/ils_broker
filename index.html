@@ -145,12 +145,16 @@
         <div class="pic">
             <img src="img/intro/pic_1.jpg" alt="">
         </div>
+        <video autoplay muted playsinline loop poster="img/intro/pic_1.jpg" preload="none">
+            <source src="img/intro/video.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"></div>
         <div class="container">
             <div class="in">
                 <div class="vert">
                     <h1 class="title wow fadeInLeft" data-wow-delay="3s"><span>ДОСТАВКА СБОРНЫХ ГРУЗОВ</span><br> ИЗ европы, китая и сша</h1>
                     <p class="text wow fadeInLeft" data-wow-delay="3.2s">Доставка и таможенное оформление<br> грузов под ключ от 1 кг</p>
-                    <a href="" class="btn btn-yellow md wow fadeInLeft" data-wow-delay="3.4s"><span>Оставить заявку</span></a>
+                    <a href="#popup" data-fancybox data-options='{"touch" : false}' class="btn btn-yellow md wow fadeInLeft" data-wow-delay="3.4s"><span>Оставить заявку</span></a>
                     <div class="advantages hidd1200">
                         <div class="items">
                             <div class="item wow fadeInUp" data-wow-delay="3.6s">
@@ -659,7 +663,7 @@
     ================================= -->
     <div class="section">
         <div class="container">
-            <h2 class="title-block wow fadeInLeft" data-wow-delay="1.2s">Что мы доставляем</h2>
+            <h2 class="title-block wow fadeInLeft" data-wow-delay="1.2s">Услуги</h2>
             <div class="serv wow fadeInUp" data-wow-delay="1.4s">
                 <div class="items">
                     <div class="item w50">
@@ -1122,8 +1126,28 @@
         </div>
     </div>
       
-  
+    <!--popup-->
+    <div style="display: none;" id="popup">
+        <div class="popup">   
+            <h2 class="popup__title">СДЕЛАЙТЕ ШАГ В МИР НАДЁЖНОЙ ЛОГИСТИКИ</h2>
+            <p class="popup__text">Обращаясь в нашу компанию, вы можете быть уверены: все ваши потребности будут учтены, договорённости соблюдены, а средства сэкономлены. Будем рады проявить себя в деле!</p>
+            <p class="popup__text big">Заполните форму, и наш менеджер свяжется с вами</p>
+            <form class="action__form">
+                <div class="form-group">
+                    <label class="label">Имя: <span>*</span></label>
+                    <input type="text" name="" placeholder="">
+                </div>
+                <div class="form-group">
+                    <label class="label">Телефон: <span>*</span></label>
+                    <input class="mask" type="text" name="" placeholder="">
+                </div>
+                <button class="btn btn-yellow w100"><span>проконсультироваться</span></button>
+                <div class="agree">Нажимая на кнопку, вы соглашаетесь на обработку <a href="">персональных данных</a></div>
+            </form>
+        </div>  
+    </div>
     
+    <a class="up-page" href="#"></a>
     
     
     <script src="libs/jquery-3.7.1.min.js"></script>
