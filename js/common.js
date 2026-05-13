@@ -89,6 +89,23 @@ $(document).ready(function() {
         $(this).next('.footer__full').slideToggle(200);
     });
 
+    $(window).scroll(function(){
+        if ($(window).scrollTop() > 500) {
+            $('.up-page').addClass('active');
+        }
+        else {
+            $('.up-page').removeClass('active');
+        }
+    }); 
+
+
+    $('.up-page').on('click', function(e) {
+        e.preventDefault();          
+        $('html, body').animate({
+            scrollTop: 0
+        }, 500);                     
+    }); 
+
     $('.mask').mask('+7 (999) 999-99-99');
           
 
